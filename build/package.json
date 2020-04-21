@@ -6,13 +6,12 @@
   "scripts": {
     "prebuild": "rm -rf ./build",
     "build": "babel -d ./build . --ignore node_modules --copy-files",
-    "start": "node ./build/index.js",
+    "start": "node index.js",
     "server": "nodemon index.js --exec babel-node --presets es2015,stage-2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Raul Armas Santiago",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@azure/event-hubs": "^1.0.7",
     "bcryptjs": "^2.4.3",
