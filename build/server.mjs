@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
-import DataAzure from './src/models/datosAzure.js'
+import DataAzure from './src/models/datosAzure.mjs/index.mjs'
 import bodyParser from 'body-parser'
 import {EventHubClient, EventPosition} from '@azure/event-hubs'
 import express from 'express';
