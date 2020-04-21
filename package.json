@@ -1,0 +1,11 @@
+{
+  "name": "platformiothub",
+  "version": "1.0.0",
+  "description": "plataforma alimentada por dispositivos conectados a iotHub",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Raul Armas Santiago",
+  "license": "ISC"
+}
