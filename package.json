@@ -12,6 +12,7 @@
   },
   "author": "Raul Armas Santiago",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "@azure/event-hubs": "^1.0.7",
     "bcryptjs": "^2.4.3",
