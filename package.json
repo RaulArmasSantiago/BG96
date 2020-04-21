@@ -7,7 +7,7 @@
   "scripts": {
     "prebuild": "rm -rf ./build",
     "build": "babel -d ./build . --ignore node_modules --copy-files",
-    "start": "node -r @std/esm ./build/server.mjs",
+    "start": "nodemon server.js --exec babel-node --presets es2015,stage-2", //"node -r @std/esm ./build/server.mjs",
     "server": "nodemon server.js --exec babel-node --presets es2015,stage-2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
