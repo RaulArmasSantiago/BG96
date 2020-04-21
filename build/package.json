@@ -1,13 +1,16 @@
 {
   "name": "platformiothub",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.9.4"
+  },
   "description": "plataforma alimentada por dispositivos conectados a iotHub",
   "main": "server.js",
-  "type": "module",
+
   "scripts": {
     "prebuild": "rm -rf ./build",
     "build": "babel -d ./build . --ignore node_modules --copy-files",
-    "start": "node -r @std/esm ./build/server.mjs",
+    "start": "node -r @std/esm ./build/server.js",
     "server": "nodemon server.js --exec babel-node --presets es2015,stage-2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
