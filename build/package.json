@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "plataforma alimentada por dispositivos conectados a iotHub",
   "main": "server.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "prebuild": "rm -rf ./build",
     "build": "babel -d ./build . --ignore node_modules --copy-files",
-    "start": "node ./build/server.mjs",
+    "start": "node -r @std/esm ./build/server.mjs",
     "server": "nodemon server.js --exec babel-node --presets es2015,stage-2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@azure/event-hubs": "^1.0.7",
+    "@std/esm": "^0.26.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
