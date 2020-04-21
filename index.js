@@ -1,10 +1,11 @@
-import express from 'express';
+
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import DataAzure from './src/models/datosAzure'
 import bodyParser from 'body-parser'
 import {EventHubClient, EventPosition} from '@azure/event-hubs'
+import express from 'express';
 
 
 const app = express();
