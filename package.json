@@ -4,8 +4,26 @@
   "description": "plataforma alimentada por dispositivos conectados a iotHub",
   "main": "index.js",
   "scripts": {
+    "prebuild": "rm -rf ./build",
+    "build": "babel -d ./build . --ignore node_modules --copy-files",
+    "start": "node ./build/index.js",
+    "server": "nodemon index.js --exec babel-node --presets es2015,stage-2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Raul Armas Santiago",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@azure/event-hubs": "^1.0.7",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "nodemon": "^2.0.3"
+  }
 }
