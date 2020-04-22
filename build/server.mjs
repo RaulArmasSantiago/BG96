@@ -28,8 +28,8 @@ app.listen(PORT, () => {
     console.log("Magic Happens in port: " + PORT)
 })
 
-var connectionString = 'HostName=QuectelPrueba.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=gsJFFnrluFDfl6Dy8K/HNgsixmjeho2PHYwa0uagBH0=';
-
+var connectionString = 'HostName=breackout9695.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=l5/wjib3d9hb9xBM0oCcdJak9x4vWttECN4c/bf2B8s=';
+                       //'HostName=breackout9695.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=l5/wjib3d9hb9xBM0oCcdJak9x4vWttECN4c/bf2B8s=';
 var printError = (err) => {
     console.log(err)
 }
