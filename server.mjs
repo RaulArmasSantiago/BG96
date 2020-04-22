@@ -36,7 +36,7 @@ var printError = (err) => {
 
 var printMessage = (message) => {
     console.log('Telemetry received: ')
-    let body = message.body 
+    let body = message 
     DataAzure.create(body).then((data) => {
         console.log("Guardado")
     }).catch((err) => {
