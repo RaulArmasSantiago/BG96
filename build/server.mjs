@@ -4,7 +4,7 @@ import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import DataAzure from './src/models/datosAzure.mjs'
 import bodyParser from 'body-parser'
-import {EventHubClient, EventPosition} from '@azure/event-hubs'
+import EventHub from '@azure/event-hubs'
 import express from 'express';
 
 
@@ -50,13 +50,13 @@ var printMessage = (message) => {
 }
 
 var ehClient;
-EventHubClient.createFromIotHubConnectionString(connectionString).then(function (client) {
+EventHub.EventHubClient.createFromIotHubConnectionString(connectionString).then(function (client) {
   console.log("Successfully created the EventHub Client from iothub connection string.");
   ehClient = client;
   return ehClient.getPartitionIds();
 }).then(function (ids) {
   console.log("The partition ids are: ", ids);  
   return ids.map(function (id) {
-    return ehClient.receive(id, printMessage, printError, { eventPosition: EventPosition.fromEnqueuedTime(Date.now()) });
+    return ehClient.receive(id, printMessage, printError, { eventPosition: EventHub.EventPosition.fromEnqueuedTime(Date.now()) });
   });
 }).catch(printError);
