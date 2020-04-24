@@ -39,7 +39,8 @@ var printMessage = (message) => {
     let body = message.body
     console.log(message)
     DataAzure.create(body).then((data) => {
-        console.log("Guardado")
+
+        console.log("Guardado: " + data)
     }).catch((err) => {
         console.log(err);
     })
