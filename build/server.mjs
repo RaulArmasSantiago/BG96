@@ -21,12 +21,12 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/allDevices', (req,res) => {
-    let devices = DataAzure.find().then((devices)=>{
-        console.log(devices)
-        return devices
-    }).catch(err => err)
-
-    res.status(200).send(devices)
+    DataAzure.find().then(rep => {
+        console.log(rep)
+        return res.status(201).json(rep)
+    }).catch(err => {
+        console.log(err)
+    })
 })
 
 app.get('/', (req, res) => {
