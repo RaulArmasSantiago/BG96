@@ -20,6 +20,15 @@ db.on('error', () => console.log("Error al conectar a la BD"))
 app.use(bodyParser.json());
 app.use(cors());
 
+app.get('/allDevices', (req,res) => {
+    let devices = DataAzure.find().then((devices)=>{
+        console.log(devices)
+        return devices
+    }).catch(err => err)
+
+    res.status(200).send(devices)
+})
+
 app.get('/', (req, res) => {
     res.send("Estoy funcionando :)")
 })
