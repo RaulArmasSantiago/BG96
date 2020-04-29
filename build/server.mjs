@@ -29,6 +29,15 @@ app.get('/allDevices', (req,res) => {
     })
 })
 
+app.post('/newDev', (req,res) => {
+    let body = req.body;
+    DataAzure.create(body).then((data) => {
+        console.log("Guardado: " + data)
+    }).catch((err) => {
+        console.log(err);
+    })
+})
+
 app.get('/', (req, res) => {
     res.send("Estoy funcionando :)")
 })
@@ -47,11 +56,15 @@ var printMessage = (message) => {
     console.log('Telemetry received: ')
     let body = message.body
     console.log(message)
-    DataAzure.create(body).then((data) => {
+    DataAzure.findOneAndUpdate({IMEI:body.IMEI}, {$set:{latitud:body.latitud, longitud:body.longitud}}, {new:true}, (err,dev) => {
+        if(err){
+            console.log(err)
+            res.status(600)
+        }else{
+            console.log(dev)
+            res.status(200).json(dev)
+        }
 
-        console.log("Guardado: " + data)
-    }).catch((err) => {
-        console.log(err);
     })
     console.log('Application properties (set by device): ')
     console.log(JSON.stringify(message.applicationProperties));
