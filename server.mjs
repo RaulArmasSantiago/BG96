@@ -55,8 +55,8 @@ var printError = (err) => {
 var printMessage = (message) => {
     console.log('Telemetry received: ')
     let body = message.body
-    console.log(message.body)
-    DataAzure.findOneAndUpdate({IMEI:body.IMEI}, {$set:{latitud:body.latitud, longitud:body.longitud}}, {new:true}, (err,dev) => {
+    console.log(`BODY ${body}`)
+    DataAzure.findOneAndUpdate({IMEI:body.IMEI}, {$set: {body}}, {new:true}, (err,dev) => {
         console.log(`Datos ${dev}`)
         console.log(`Error ${err}`)
     })
