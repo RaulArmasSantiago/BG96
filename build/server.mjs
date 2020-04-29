@@ -57,14 +57,8 @@ var printMessage = (message) => {
     let body = message.body
     console.log(message.body)
     DataAzure.findOneAndUpdate({IMEI:body.IMEI}, {$set:{latitud:body.latitud, longitud:body.longitud}}, {new:true}, (err,dev) => {
-        if(err){
-            console.log(err)
-            res.status(600)
-        }else{
-            console.log(dev)
-            res.status(200).json(dev)
-        }
-
+        console.log(`Datos ${dev}`)
+        console.log(`Error ${err}`)
     })
     console.log('Application properties (set by device): ')
     console.log(JSON.stringify(message.applicationProperties));
