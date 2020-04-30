@@ -33,6 +33,7 @@ app.post('/newDev', (req,res) => {
     let body = req.body;
     DataAzure.create(body).then((data) => {
         console.log("Guardado: " + data)
+        res.status(200).send(`Guardado ${data}`)
     }).catch((err) => {
         console.log(err);
     })
@@ -55,7 +56,8 @@ var printError = (err) => {
 var printMessage = (message) => {
     console.log('Telemetry received: ')
     let body = message.body
-    console.log(`BODY ${body}`)
+    console.log(`Message ${message}`)
+    console.log(`BODY ${JSON.stringify(body)}`)
     DataAzure.findOneAndUpdate({IMEI:body.IMEI}, {$set: {body}}, {new:true}, (err,dev) => {
         console.log(`Datos ${dev}`)
         console.log(`Error ${err}`)
