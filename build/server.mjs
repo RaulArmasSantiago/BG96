@@ -39,6 +39,14 @@ app.post('/newDev', (req,res) => {
     })
 })
 
+app.post('/updateDev', (req,res) => {
+    let body = req.body;
+    DataAzure.findOneAndUpdate({IMEI:body.IMEI},{$set: body}, {new:true, useFindAndModify: false}).then(dev => {
+        console.log(dev)
+        res.status(200).send(dev)
+    }).catch(err => res.status(304).send(err))
+})
+
 app.get('/', (req, res) => {
     res.send("Estoy funcionando :)")
 })
@@ -58,10 +66,10 @@ var printMessage = (message) => {
     let body = message.body
     console.log(`Message ${message}`)
     console.log(`BODY ${JSON.stringify(body)}`)
-    DataAzure.findOneAndUpdate({IMEI:body.IMEI}, {$set: {body}}, {new:true}, (err,dev) => {
-        console.log(`Datos ${dev}`)
-        console.log(`Error ${err}`)
-    })
+    DataAzure.findOneAndUpdate({IMEI:body.IMEI},{$set: body}, {new:true, useFindAndModify: false}).then(dev => {
+        console.log(dev)
+        res.status(200).send(dev)
+    }).catch(err => res.status(304).send(err))
     console.log('Application properties (set by device): ')
     console.log(JSON.stringify(message.applicationProperties));
     console.log('System properties (set by IoT Hub): ')
