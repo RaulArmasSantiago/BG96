@@ -11,7 +11,7 @@ import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 3001
 
-mongoose.connect('mongodb://iotaxi1:sistemasiotaxi1@ds157614.mlab.com:57614/iotaxi',{useNewUrlParser:true, useCreateIndex:true, useUnifiedTopology: true})
+mongoose.connect('mongodb://iotaxi1:sistemasiotaxi1@ds157614.mlab.com:57614/iotaxi',{useNewUrlParser:true, useCreateIndex:true, useUnifiedTopology: true, useFindAndModify:false})
 //mongoose.connect('mongodb://localhost:27017/iotaxi')
 const db = mongoose.connection;
 db.on('error', () => console.log("Error al conectar a la BD"))
