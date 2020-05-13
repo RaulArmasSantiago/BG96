@@ -14,10 +14,10 @@ import verifyToken from '../utils/verifyToken';
 const SERVER = new ApolloServer({
     typeDefs: TypeDef,
     resolvers: { Query, Mutation, Subscription },
-    context: async context => ({
+    context:   async context => ({
         ...context,
         user: await verifyToken(context)
-    }),
+      }),
     playground: {
         endpoint: 'http://localhost:3001/graphql',
         subscriptionEndpoint: 'ws://localhost:3001/subscriptions',
