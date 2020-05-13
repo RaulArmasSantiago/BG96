@@ -6,7 +6,6 @@
   },
   "description": "plataforma alimentada por dispositivos conectados a iotHub",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "prebuild": "rm -rf ./build",
     "build": "babel -d ./build . --ignore node_modules --copy-files",
