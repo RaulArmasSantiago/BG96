@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema
 
-const DataAzureSchema = new Schema({
-    
+const Gps = new Schema({
     "IMEI":{
         type:String,
         required: true,
@@ -18,6 +17,6 @@ const DataAzureSchema = new Schema({
         type:Date,
         default: new Date()
     }
-},{collection:"DataAzure", timestamps:true});
-export default mongoose.model('DataAzure',DataAzureSchema)
+},{collection:"Gps", timestamps:true});
+export default mongoose.model('Gps',Gps)
 

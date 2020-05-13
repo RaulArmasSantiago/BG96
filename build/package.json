@@ -11,7 +11,7 @@
     "prebuild": "rm -rf ./build",
     "build": "babel -d ./build . --ignore node_modules --copy-files",
     "start": "node -r @std/esm ./build/server.mjs",
-    "server": "nodemon server.js --exec babel-node --presets es2015,stage-2",
+    "server": "nodemon server.mjs --exec babel-node --presets es2015,stage-2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Raul Armas Santiago",
@@ -19,9 +19,13 @@
   "dependencies": {
     "@azure/event-hubs": "^1.0.7",
     "@std/esm": "^0.26.0",
+    "apollo-server-express": "^2.13.1",
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "graphql": "^15.0.0",
+    "graphql-tools": "^5.0.0",
     "mongoose": "^5.9.10"
   },
   "devDependencies": {

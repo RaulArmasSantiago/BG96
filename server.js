@@ -1,5 +1,5 @@
 //Generales
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import express from 'express';
@@ -14,15 +14,24 @@ import {createServer} from 'http'
 import {SubscriptionServer} from 'subscriptions-transport-ws'
 import {makeExecutableSchema} from 'graphql-tools'
 
+// Imports: GraphQL TypeDefs & Resolvers
+import Types from './src/graphql/typedefs/types';
+import Query from './src/graphql/resolvers/query';
+import Mutation from './src/graphql/resolvers/mutation';
+import Subscription from './src/graphql/resolvers/subscription';
+
 //Middleware: GrapgQL
-import ApolloServer from './graphql/schema'
+import ApolloServer from './src/graphql/schema'
+
+
 
 //MODELOS
-import DataAzure from './src/models/datosAzure.mjs'
+import Gps from './src/models/Gps.js'
 
 const app = express();
 const PORT = process.env.PORT || 3001
 
+ApolloServer.applyMiddleware({ app });
 /**
  * Aqui definimos la conexion a la base de datos MongoBD
  */
@@ -38,40 +47,40 @@ app.use(cors());
 /**
  * Aqui definimos los end-point de API Rest Libres
  */
-app.get('/allDevices', (req,res) => {
-    DataAzure.find().then(rep => {
-        console.log(rep)
-        return res.status(201).json(rep)
-    }).catch(err => {
-        console.log(err)
-    })
-})
+// app.get('/allDevices', (req,res) => {
+//     DataAzure.find().then(rep => {
+//         console.log(rep)
+//         return res.status(201).json(rep)
+//     }).catch(err => {
+//         console.log(err)
+//     })
+// })
 
-app.post('/newDev', (req,res) => {
-    let body = req.body;
-    DataAzure.create(body).then((data) => {
-        console.log("Guardado: " + data)
-        res.status(200).send(`Guardado ${data}`)
-    }).catch((err) => {
-        console.log(err);
-    })
-})
+// app.post('/newDev', (req,res) => {
+//     let body = req.body;
+//     DataAzure.create(body).then((data) => {
+//         console.log("Guardado: " + data)
+//         res.status(200).send(`Guardado ${data}`)
+//     }).catch((err) => {
+//         console.log(err);
+//     })
+// })
 
-app.post('/updateDev', (req,res) => {
-    let body = req.body;
-    DataAzure.findOneAndUpdate({IMEI:body.IMEI},{$set: body}, {new:true, useFindAndModify: false}).then(dev => {
-        console.log(dev)
-        res.status(200).send(dev)
-    }).catch(err => res.status(304).send(err))
-})
+// app.post('/updateDev', (req,res) => {
+//     let body = req.body;
+//     DataAzure.findOneAndUpdate({IMEI:body.IMEI},{$set: body}, {new:true, useFindAndModify: false}).then(dev => {
+//         console.log(dev)
+//         res.status(200).send(dev)
+//     }).catch(err => res.status(304).send(err))
+// })
 
-app.get('/', (req, res) => {
-    res.send("Estoy funcionando :)")
-})
+// app.get('/', (req, res) => {
+//     res.send("Estoy funcionando :)")
+// })
 
-app.listen(PORT, () => {
+/*app.listen(PORT, () => {
     console.log("Magic Happens in port: " + PORT)
-})
+})*/
 
 /**
  * Wrap the Express server
@@ -92,7 +101,7 @@ app.listen(PORT, () => {
      })
  })
 
-//Cliente de Azure IoTHub
+/*Cliente de Azure IoTHub
 var connectionString = 'HostName=breackout9695.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=l5/wjib3d9hb9xBM0oCcdJak9x4vWttECN4c/bf2B8s=';
                        //'HostName=breackout9695.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=l5/wjib3d9hb9xBM0oCcdJak9x4vWttECN4c/bf2B8s=';
 var printError = (err) => {
@@ -125,4 +134,4 @@ EventHub.EventHubClient.createFromIotHubConnectionString(connectionString).then(
   return ids.map(function (id) {
     return ehClient.receive(id, printMessage, printError, { eventPosition: EventHub.EventPosition.fromEnqueuedTime(Date.now()) });
   });
-}).catch(printError);
+}).catch(printError);*/

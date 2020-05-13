@@ -6,7 +6,7 @@
   },
   "description": "plataforma alimentada por dispositivos conectados a iotHub",
   "main": "server.js",
-  "type": "modules",
+  "type": "module",
   "scripts": {
     "prebuild": "rm -rf ./build",
     "build": "babel -d ./build . --ignore node_modules --copy-files",
@@ -19,9 +19,14 @@
   "dependencies": {
     "@azure/event-hubs": "^1.0.7",
     "@std/esm": "^0.26.0",
+    "apollo-server-express": "^2.13.1",
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "graphql": "^15.0.0",
+    "graphql-tools": "^5.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10"
   },
   "devDependencies": {
