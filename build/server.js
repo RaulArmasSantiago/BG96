@@ -1,45 +1,95 @@
-//Generales
-import mongoose from 'mongoose';
-import cors from 'cors';
-import bcrypt from 'bcryptjs';
-import express from 'express';
-import bodyParser from 'body-parser';
+'use strict';
 
-//Manejador de eentos IotHub Azure
-import EventHub from '@azure/event-hubs';
+var _mongoose = require('mongoose');
 
-//GrpahQL
-import { execute, subscribe } from 'graphql';
-import { createServer } from 'http';
-import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { makeExecutableSchema } from 'graphql-tools';
+var _mongoose2 = _interopRequireDefault(_mongoose);
 
-// Imports: GraphQL TypeDefs & Resolvers
-import Types from './src/graphql/typedefs/types';
-import Query from './src/graphql/resolvers/query';
-import Mutation from './src/graphql/resolvers/mutation';
-import Subscription from './src/graphql/resolvers/subscription';
+var _cors = require('cors');
+
+var _cors2 = _interopRequireDefault(_cors);
+
+var _bcryptjs = require('bcryptjs');
+
+var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
+
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
+var _bodyParser = require('body-parser');
+
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
+
+var _eventHubs = require('@azure/event-hubs');
+
+var _eventHubs2 = _interopRequireDefault(_eventHubs);
+
+var _graphql = require('graphql');
+
+var _http = require('http');
+
+var _subscriptionsTransportWs = require('subscriptions-transport-ws');
+
+var _graphqlTools = require('graphql-tools');
+
+var _types = require('./src/graphql/typedefs/types');
+
+var _types2 = _interopRequireDefault(_types);
+
+var _query = require('./src/graphql/resolvers/query');
+
+var _query2 = _interopRequireDefault(_query);
+
+var _mutation = require('./src/graphql/resolvers/mutation');
+
+var _mutation2 = _interopRequireDefault(_mutation);
+
+var _subscription = require('./src/graphql/resolvers/subscription');
+
+var _subscription2 = _interopRequireDefault(_subscription);
+
+var _schema = require('./src/graphql/schema');
+
+var _schema2 = _interopRequireDefault(_schema);
+
+var _Gps = require('./src/models/Gps.js');
+
+var _Gps2 = _interopRequireDefault(_Gps);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //Middleware: GrapgQL
-import ApolloServer from './src/graphql/schema';
+
+
+// Imports: GraphQL TypeDefs & Resolvers
+
+
+//GrpahQL
+//Generales
+var app = (0, _express2.default)();
 
 //MODELOS
-import Gps from './src/models/Gps.js';
 
-const app = express();
-const PORT = process.env.PORT || 3001;
 
-ApolloServer.applyMiddleware({ app });
+//Manejador de eentos IotHub Azure
+
+var PORT = process.env.PORT || 3001;
+
+_schema2.default.applyMiddleware({ app: app });
 /**
  * Aqui definimos la conexion a la base de datos MongoBD
  */
-mongoose.connect('mongodb://iotaxi1:sistemasiotaxi1@ds157614.mlab.com:57614/iotaxi', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
+_mongoose2.default.connect('mongodb://iotaxi1:sistemasiotaxi1@ds157614.mlab.com:57614/iotaxi', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
 //mongoose.connect('mongodb://localhost:27017/iotaxi')
-const db = mongoose.connection;
-db.on('error', () => console.log("Error al conectar a la BD")).once('open', () => console.log("Conectado a la BD!!"));
+var db = _mongoose2.default.connection;
+db.on('error', function () {
+    return console.log("Error al conectar a la BD");
+}).once('open', function () {
+    return console.log("Conectado a la BD!!");
+});
 
-app.use(bodyParser.json());
-app.use(cors());
+app.use(_bodyParser2.default.json());
+app.use((0, _cors2.default)());
 
 /**
  * Aqui definimos los end-point de API Rest Libres
@@ -83,15 +133,15 @@ app.use(cors());
  * Wrap the Express server
  */
 
-const ws = createServer(app);
+var ws = (0, _http.createServer)(app);
 
-ws.listen(PORT, () => {
-    console.log(`GraphQL Server is now Running on http://localhost:${PORT}`);
+ws.listen(PORT, function () {
+    console.log('GraphQL Server is now Running on http://localhost:' + PORT);
     // Set up the WebSocket for handling GraphQL subscription
-    new SubscriptionServer({
-        execute,
-        subscribe,
-        schema: makeExecutableSchema({ typeDefs: Types, resolvers: { Query, Mutation, Subscription } })
+    new _subscriptionsTransportWs.SubscriptionServer({
+        execute: _graphql.execute,
+        subscribe: _graphql.subscribe,
+        schema: (0, _graphqlTools.makeExecutableSchema)({ typeDefs: _types2.default, resolvers: { Query: _query2.default, Mutation: _mutation2.default, Subscription: _subscription2.default } })
     }, {
         server: ws,
         path: '/subscriptions'

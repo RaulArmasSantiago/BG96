@@ -1,12 +1,27 @@
-import pubsub from '../pubsub';
-import { withFilter } from 'graphql-subscriptions';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _pubsub = require('../pubsub');
+
+var _pubsub2 = _interopRequireDefault(_pubsub);
+
+var _graphqlSubscriptions = require('graphql-subscriptions');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
     gpsAdded: {
-        subscribe: () => pubsub.asyncIterator(['gpsAdded'])
+        subscribe: function subscribe() {
+            return _pubsub2.default.asyncIterator(['gpsAdded']);
+        }
     },
 
     gpsUpdated: {
-        subscribe: () => pubsub.asyncIterator(['gpsUpdated'])
+        subscribe: function subscribe() {
+            return _pubsub2.default.asyncIterator(['gpsUpdated']);
+        }
     }
 };

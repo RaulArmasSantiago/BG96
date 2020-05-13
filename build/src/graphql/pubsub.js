@@ -1,6 +1,10 @@
-//Subscriptions manager
-import { PubSub } from 'graphql-subscriptions';
+'use strict';
 
-const pubsub = new PubSub();
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-export default pubsub;
+var _graphqlSubscriptions = require('graphql-subscriptions');
+
+var pubsub = new _graphqlSubscriptions.PubSub(); //Subscriptions manager
+exports.default = pubsub;
