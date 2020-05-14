@@ -70,9 +70,11 @@ var SERVER = new _apolloServerExpress.ApolloServer({
             }, _callee, undefined);
         }));
 
-        return function context(_x) {
+        function context(_x) {
             return _ref.apply(this, arguments);
-        };
+        }
+
+        return context;
     }(),
     playground: {
         endpoint: 'http://localhost:3001/graphql',
