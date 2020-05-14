@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 //Mongo Models
 import Gps from '../../models/Gps'
 
