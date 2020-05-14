@@ -22,10 +22,11 @@ const SERVER = new ApolloServer({
         endpoint: `https://azureiothub-bg9596.herokuapp.com/graphql`,
         subscriptionEndpoint: `wss://azureiothub-bg9596.herokuapp.com/subscriptions`,
         settings:{
-            'editor.editor.theme': 'light'
+            'editor.editor.theme': 'light',
         }
     },
-    introspection: false
+    playground:true,
+    introspection:true
 });
 
 export default SERVER;

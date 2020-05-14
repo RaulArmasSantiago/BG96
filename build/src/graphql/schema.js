@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _ref2;
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _apolloServerExpress = require('apollo-server-express');
@@ -30,6 +32,8 @@ var _verifyToken2 = _interopRequireDefault(_verifyToken);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } //Imports: GraphQL Apollo Server
 
 
@@ -40,7 +44,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 // GraphQL: Schema
-var SERVER = new _apolloServerExpress.ApolloServer({
+var SERVER = new _apolloServerExpress.ApolloServer((_ref2 = {
     typeDefs: _types2.default,
     resolvers: { Query: _query2.default, Mutation: _mutation2.default, Subscription: _subscription2.default },
     context: function () {
@@ -82,8 +86,7 @@ var SERVER = new _apolloServerExpress.ApolloServer({
         settings: {
             'editor.editor.theme': 'light'
         }
-    },
-    introspection: false
-});
+    }
+}, _defineProperty(_ref2, 'playground', true), _defineProperty(_ref2, 'introspection', true), _ref2));
 
 exports.default = SERVER;
