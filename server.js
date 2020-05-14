@@ -89,7 +89,7 @@ app.use(cors());
  const ws = createServer(app);
 
  ws.listen(PORT, () => {
-     console.log(`GraphQL Server is now Running on http://localhost:${PORT}`);
+     console.log(`GraphQL Server is now Running on http://azureiothub-bg9596.herokuapp.com`);
      // Set up the WebSocket for handling GraphQL subscription
      new SubscriptionServer({
          execute,
