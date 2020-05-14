@@ -79,8 +79,8 @@ var SERVER = new _apolloServerExpress.ApolloServer({
         return context;
     }(),
     playground: {
-        endpoint: 'http://azureiothub-bg9596.herokuapp.com/graphql',
-        subscriptionEndpoint: 'ws://azureiothub-bg9596.herokuapp.com/subscriptions',
+        endpoint: 'http://localhost:' + PORT + '/graphql',
+        subscriptionEndpoint: 'ws://localhost:' + PORT + '/subscriptions',
         settings: {
             'editor.editor.theme': 'light'
         }
