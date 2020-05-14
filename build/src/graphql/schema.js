@@ -39,8 +39,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 // Imports: Utilities
 
 
-var PORT = process.env.PORT || 3001;
-
 // GraphQL: Schema
 var SERVER = new _apolloServerExpress.ApolloServer({
     typeDefs: _types2.default,
@@ -84,7 +82,8 @@ var SERVER = new _apolloServerExpress.ApolloServer({
         settings: {
             'editor.editor.theme': 'light'
         }
-    }
+    },
+    introspection: false
 });
 
 exports.default = SERVER;

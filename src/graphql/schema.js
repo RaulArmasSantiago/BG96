@@ -9,7 +9,6 @@ import Subscription from './resolvers/subscription';
 
 // Imports: Utilities
 import verifyToken from '../utils/verifyToken';
-const PORT = process.env.PORT || 3001
 
 // GraphQL: Schema
 const SERVER = new ApolloServer({
@@ -25,7 +24,8 @@ const SERVER = new ApolloServer({
         settings:{
             'editor.editor.theme': 'light'
         }
-    }
+    },
+    introspection: false
 });
 
 export default SERVER;
