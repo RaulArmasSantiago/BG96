@@ -1,3 +1,6 @@
+require("babel-core/register");
+require("babel-polyfill");
+
 //Imports: GraphQL Apollo Server
 import {ApolloServer} from 'apollo-server-express';
 
@@ -9,6 +12,7 @@ import Subscription from './resolvers/subscription';
 
 // Imports: Utilities
 import verifyToken from '../utils/verifyToken';
+
 
 // GraphQL: Schema
 const SERVER = new ApolloServer({
