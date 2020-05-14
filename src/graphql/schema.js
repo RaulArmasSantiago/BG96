@@ -1,6 +1,3 @@
-require("babel-core/register");
-require("babel-polyfill");
-
 //Imports: GraphQL Apollo Server
 import {ApolloServer} from 'apollo-server-express';
 
