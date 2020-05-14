@@ -9,7 +9,7 @@ import Subscription from './resolvers/subscription';
 
 // Imports: Utilities
 import verifyToken from '../utils/verifyToken';
-
+const PORT = process.env.PORT || 3001
 
 // GraphQL: Schema
 const SERVER = new ApolloServer({
@@ -20,8 +20,8 @@ const SERVER = new ApolloServer({
         user: await verifyToken(context)
       }),
     playground: {
-        endpoint: 'http://localhost:3001/graphql',
-        subscriptionEndpoint: 'ws://localhost:3001/subscriptions',
+        endpoint: `http://localhost:${PORT}/graphql`,
+        subscriptionEndpoint: `ws://localhost:${PORT}/subscriptions`,
         settings:{
             'editor.editor.theme': 'light'
         }
