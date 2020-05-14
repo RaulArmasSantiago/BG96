@@ -144,7 +144,7 @@ ws.listen(PORT, function () {
         schema: (0, _graphqlTools.makeExecutableSchema)({ typeDefs: _types2.default, resolvers: { Query: _query2.default, Mutation: _mutation2.default, Subscription: _subscription2.default } })
     }, {
         server: ws,
-        path: '/subscriptions'
+        path: '/graphql'
     });
 });
 

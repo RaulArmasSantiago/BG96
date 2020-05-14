@@ -97,7 +97,7 @@ app.use(cors());
          schema: makeExecutableSchema({ typeDefs: Types, resolvers:{ Query, Mutation, Subscription }})
      }, {
          server: ws,
-         path: '/subscriptions'
+         path: '/graphql'
      })
  })
 
