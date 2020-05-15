@@ -15,13 +15,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     gpsAdded: {
         subscribe: function subscribe() {
-            return _pubsub2.default.asyncIterator('gpsAdded');
+            return _pubsub2.default.asyncIterator(['gpsAdded']);
         }
     },
 
     gpsUpdated: {
         subscribe: function subscribe() {
-            return _pubsub2.default.asyncIterator('gpsUpdated');
+            return _pubsub2.default.asyncIterator(['gpsUpdated']);
         }
     }
 };

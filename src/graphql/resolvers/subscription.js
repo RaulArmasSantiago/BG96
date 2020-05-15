@@ -3,10 +3,10 @@ import {withFilter} from 'graphql-subscriptions'
 
 export default {
     gpsAdded: {
-        subscribe: () => pubsub.asyncIterator('gpsAdded'),
+        subscribe: () => pubsub.asyncIterator(['gpsAdded']),
     },
 
     gpsUpdated: {
-        subscribe: () => pubsub.asyncIterator('gpsUpdated'),
+        subscribe: () => pubsub.asyncIterator(['gpsUpdated']),
     }
 }
