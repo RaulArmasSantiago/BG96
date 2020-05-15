@@ -14,14 +14,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     gpsAdded: {
-        subscribe: function subscribe() {
+        subscribe: (0, _graphqlSubscriptions.withFilter)(function () {
             return _pubsub2.default.asyncIterator(['gpsAdded']);
-        }
+        }, function (params, variable) {
+            return true;
+        })
     },
 
     gpsUpdated: {
-        subscribe: function subscribe() {
+        subscribe: (0, _graphqlSubscriptions.withFilter)(function () {
             return _pubsub2.default.asyncIterator(['gpsUpdated']);
-        }
+        }, function (params, variable) {
+            return true;
+        })
     }
 };
