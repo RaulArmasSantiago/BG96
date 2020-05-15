@@ -19,8 +19,8 @@ const SERVER = new ApolloServer({
         user: await verifyToken(context)
       }),
     playground: {
-        endpoint: `http://azureiothub-bg9596.herokuapp.com/graphql`,
-        subscriptionEndpoint: 'ws://azureiothub-bg9596.herokuapp.com/subscriptions',
+        endpoint: `https://azureiothub-bg9596.herokuapp.com/graphql`,
+        subscriptionEndpoint: 'wss://azureiothub-bg9596.herokuapp.com/subscriptions',
         settings:{
             'editor.editor.theme': 'light',
         }
