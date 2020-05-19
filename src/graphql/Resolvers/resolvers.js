@@ -1,3 +1,4 @@
+require("babel-polyfill");
 import { PubSub, withFilter} from 'apollo-server-express';
 import GPS from '../../models/Gps';
 
