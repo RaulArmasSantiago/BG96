@@ -24,33 +24,17 @@ var _eventHubs = require('@azure/event-hubs');
 
 var _eventHubs2 = _interopRequireDefault(_eventHubs);
 
-var _graphql = require('graphql');
-
 var _http = require('http');
 
-var _subscriptionsTransportWs = require('subscriptions-transport-ws');
-
-var _graphqlTools = require('graphql-tools');
-
-var _types = require('./src/graphql/typedefs/types');
-
-var _types2 = _interopRequireDefault(_types);
-
-var _query = require('./src/graphql/resolvers/query');
-
-var _query2 = _interopRequireDefault(_query);
-
-var _mutation = require('./src/graphql/resolvers/mutation');
-
-var _mutation2 = _interopRequireDefault(_mutation);
-
-var _subscription = require('./src/graphql/resolvers/subscription');
-
-var _subscription2 = _interopRequireDefault(_subscription);
+var _apolloServerExpress = require('apollo-server-express');
 
 var _schema = require('./src/graphql/schema');
 
 var _schema2 = _interopRequireDefault(_schema);
+
+var _resolvers = require('./src/graphql/Resolvers/resolvers');
+
+var _resolvers2 = _interopRequireDefault(_resolvers);
 
 var _Gps = require('./src/models/Gps.js');
 
@@ -58,24 +42,23 @@ var _Gps2 = _interopRequireDefault(_Gps);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//Manejador de eentos IotHub Azure
+var PORT = process.env.PORT || 3001;
+
 //Middleware: GrapgQL
+
+
+//MODELOS
 
 
 // Imports: GraphQL TypeDefs & Resolvers
 
 
-//GrpahQL
+//Apollo
 //Generales
+
 var app = (0, _express2.default)();
 
-//MODELOS
-
-
-//Manejador de eentos IotHub Azure
-
-var PORT = process.env.PORT || 3001;
-
-_schema2.default.applyMiddleware({ app: app });
 /**
  * Aqui definimos la conexion a la base de datos MongoBD
  */
@@ -133,19 +116,15 @@ app.use((0, _cors2.default)());
  * Wrap the Express server
  */
 
-var ws = (0, _http.createServer)(app);
+var apolloServer = new _apolloServerExpress.ApolloServer({ typeDefs: _schema2.default, resolvers: _resolvers2.default });
+apolloServer.applyMiddleware({ app: app });
 
-ws.listen(PORT, function () {
-    console.log('GraphQL Server is now Running on http://localhost:' + PORT);
-    // Set up the WebSocket for handling GraphQL subscription
-    new _subscriptionsTransportWs.SubscriptionServer({
-        execute: _graphql.execute,
-        subscribe: _graphql.subscribe,
-        schema: (0, _graphqlTools.makeExecutableSchema)({ typeDefs: _types2.default, resolvers: { Query: _query2.default, Mutation: _mutation2.default, Subscription: _subscription2.default } })
-    }, {
-        server: ws,
-        path: '/graphql'
-    });
+var httpServer = (0, _http.createServer)(app);
+apolloServer.installSubscriptionHandlers(httpServer);
+
+httpServer.listen({ port: PORT }, function () {
+    console.log('\uD83D\uDE80 Server ready at http://localhost:' + PORT + apolloServer.graphqlPath);
+    console.log('\uD83D\uDE80 Subscriptions ready at ws://localhost:' + PORT + apolloServer.subscriptionsPath);
 });
 
 /*Cliente de Azure IoTHub

@@ -8,30 +8,23 @@ import bodyParser from 'body-parser'
 //Manejador de eentos IotHub Azure
 import EventHub from '@azure/event-hubs'
 
-//GrpahQL
-import {execute, subscribe} from 'graphql';
-import {createServer} from 'http'
-import {SubscriptionServer} from 'subscriptions-transport-ws'
-import {makeExecutableSchema} from 'graphql-tools'
+//Apollo
+import {createServer} from 'http';
+import { ApolloServer} from 'apollo-server-express';
 
 // Imports: GraphQL TypeDefs & Resolvers
-import Types from './src/graphql/typedefs/types';
-import Query from './src/graphql/resolvers/query';
-import Mutation from './src/graphql/resolvers/mutation';
-import Subscription from './src/graphql/resolvers/subscription';
+import typeDefs from './src/graphql/schema';
+import resolvers from './src/graphql/Resolvers/resolvers';
 
 //Middleware: GrapgQL
-import ApolloServer from './src/graphql/schema'
-
 
 
 //MODELOS
 import Gps from './src/models/Gps.js'
 
-const app = express();
 const PORT = process.env.PORT || 3001
+const app = express();
 
-ApolloServer.applyMiddleware({ app });
 /**
  * Aqui definimos la conexion a la base de datos MongoBD
  */
@@ -86,20 +79,17 @@ app.use(cors());
  * Wrap the Express server
  */
 
- const ws = createServer(app);
+const apolloServer = new ApolloServer({typeDefs,resolvers});
+apolloServer.applyMiddleware({ app });
 
- ws.listen(PORT, () => {
-     console.log(`GraphQL Server is now Running on http://localhost:${PORT}`);
-     // Set up the WebSocket for handling GraphQL subscription
-     new SubscriptionServer({
-         execute,
-         subscribe,
-         schema: makeExecutableSchema({ typeDefs: Types, resolvers:{ Query, Mutation, Subscription }})
-     }, {
-         server: ws,
-         path: '/graphql'
-     })
- })
+const httpServer = createServer(app);
+apolloServer.installSubscriptionHandlers(httpServer);
+
+httpServer.listen({port: PORT}, () =>{
+    console.log(`🚀 Server ready at http://localhost:${PORT}${apolloServer.graphqlPath}`)
+    console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${apolloServer.subscriptionsPath}`)
+})
+
 
 /*Cliente de Azure IoTHub
 var connectionString = 'HostName=breackout9695.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=l5/wjib3d9hb9xBM0oCcdJak9x4vWttECN4c/bf2B8s=';
