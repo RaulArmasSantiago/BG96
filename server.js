@@ -4,6 +4,7 @@ import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import express from 'express';
 import bodyParser from 'body-parser'
+import axios from 'axios';
 
 //Manejador de eentos IotHub Azure
 import EventHub from '@azure/event-hubs'
@@ -21,6 +22,7 @@ import resolvers from './src/graphql/Resolvers/resolvers';
 
 //MODELOS
 import Gps from './src/models/Gps.js'
+import { posix } from 'path';
 
 const PORT = process.env.PORT || 3001
 const app = express();
@@ -78,6 +80,31 @@ app.use(cors());
 /**
  * Wrap the Express server
  */
+
+app.post('/addMessage', (req,res) => {
+  let body = req.body;
+  axios({
+    url:`http://localhost:${PORT}${apolloServer.graphqlPath}`,
+    method:'post',
+    data:{
+      query:`
+        mutation{
+          updateGps(
+            IMEI:${body.IMEI}
+            latitud:${body.latitud}
+            longitud:${body.longitud}
+          ){
+            IMEI,
+            latitud,
+            longitud
+          }
+        }
+      `
+    }
+  })
+  res.status(200).json({message: "Actualizado"})
+
+})
 
 const apolloServer = new ApolloServer({typeDefs,resolvers});
 apolloServer.applyMiddleware({ app });

@@ -20,6 +20,10 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _eventHubs = require('@azure/event-hubs');
 
 var _eventHubs2 = _interopRequireDefault(_eventHubs);
@@ -40,10 +44,9 @@ var _Gps = require('./src/models/Gps.js');
 
 var _Gps2 = _interopRequireDefault(_Gps);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _path = require('path');
 
-//Manejador de eentos IotHub Azure
-var PORT = process.env.PORT || 3001;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //Middleware: GrapgQL
 
@@ -55,6 +58,9 @@ var PORT = process.env.PORT || 3001;
 
 
 //Apollo
+var PORT = process.env.PORT || 3001;
+
+//Manejador de eentos IotHub Azure
 //Generales
 
 var app = (0, _express2.default)();
@@ -66,9 +72,9 @@ _mongoose2.default.connect('mongodb://iotaxi1:sistemasiotaxi1@ds157614.mlab.com:
 //mongoose.connect('mongodb://localhost:27017/iotaxi')
 var db = _mongoose2.default.connection;
 db.on('error', function () {
-    return console.log("Error al conectar a la BD");
+  return console.log("Error al conectar a la BD");
 }).once('open', function () {
-    return console.log("Conectado a la BD!!");
+  return console.log("Conectado a la BD!!");
 });
 
 app.use(_bodyParser2.default.json());
@@ -116,6 +122,18 @@ app.use((0, _cors2.default)());
  * Wrap the Express server
  */
 
+app.post('/addMessage', function (req, res) {
+  var body = req.body;
+  (0, _axios2.default)({
+    url: 'http://localhost:' + PORT + apolloServer.graphqlPath,
+    method: 'post',
+    data: {
+      query: '\n        mutation{\n          updateGps(\n            IMEI:' + body.IMEI + '\n            latitud:' + body.latitud + '\n            longitud:' + body.longitud + '\n          ){\n            IMEI,\n            latitud,\n            longitud\n          }\n        }\n      '
+    }
+  });
+  res.status(200).json({ message: "Actualizado" });
+});
+
 var apolloServer = new _apolloServerExpress.ApolloServer({ typeDefs: _schema2.default, resolvers: _resolvers2.default });
 apolloServer.applyMiddleware({ app: app });
 
@@ -123,8 +141,8 @@ var httpServer = (0, _http.createServer)(app);
 apolloServer.installSubscriptionHandlers(httpServer);
 
 httpServer.listen({ port: PORT }, function () {
-    console.log('\uD83D\uDE80 Server ready at http://localhost:' + PORT + apolloServer.graphqlPath);
-    console.log('\uD83D\uDE80 Subscriptions ready at ws://localhost:' + PORT + apolloServer.subscriptionsPath);
+  console.log('\uD83D\uDE80 Server ready at http://localhost:' + PORT + apolloServer.graphqlPath);
+  console.log('\uD83D\uDE80 Subscriptions ready at ws://localhost:' + PORT + apolloServer.subscriptionsPath);
 });
 
 /*Cliente de Azure IoTHub
