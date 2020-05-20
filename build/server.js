@@ -122,7 +122,7 @@ app.use((0, _cors2.default)());
  * Wrap the Express server
  */
 
-app.post('/addMessage', function (req, res) {
+app.post('/upstreamCallback', function (req, res) {
   var body = req.body;
   (0, _axios2.default)({
     url: 'http://localhost:' + PORT + apolloServer.graphqlPath,
