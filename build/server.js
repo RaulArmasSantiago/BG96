@@ -135,11 +135,11 @@ app.post('/upstreamCallback', function (req, res) {
 });
 
 var apolloServer = new _apolloServerExpress.ApolloServer({
-  typeDef: _schema2.default,
-  resolvers: { resolvers: _resolvers2.default },
+  typeDefs: _schema2.default,
+  resolvers: _resolvers2.default,
   playground: {
-    endpoint: 'http://localhost:' + PORT + apolloServer.graphqlPath,
-    subscriptionEndpoint: 'wss://localhost:' + PORT + apolloServer.subscriptionsPath,
+    endpoint: 'http://localhost:' + PORT + '/graphql',
+    subscriptionEndpoint: 'wss://localhost:' + PORT + '/graphql',
     settings: {
       'editor.theme': 'light'
     }
