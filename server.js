@@ -109,6 +109,7 @@ app.post('/upstreamCallback', (req,res) => {
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true,
   playground: {
     endpoint: `http://localhost:${PORT}/graphql`,
     subscriptionEndpoint: `wss://localhost:${PORT}/graphql`,
