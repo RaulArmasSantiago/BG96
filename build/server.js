@@ -134,7 +134,18 @@ app.post('/upstreamCallback', function (req, res) {
   res.status(200).json({ message: "Actualizado" });
 });
 
-var apolloServer = new _apolloServerExpress.ApolloServer({ typeDefs: _schema2.default, resolvers: _resolvers2.default });
+var apolloServer = new _apolloServerExpress.ApolloServer({
+  typeDef: _schema2.default,
+  resolvers: { resolvers: _resolvers2.default },
+  playground: {
+    endpoint: 'http://localhost:' + PORT + apolloServer.graphqlPath,
+    subscriptionEndpoint: 'wss://localhost:' + PORT + apolloServer.subscriptionsPath,
+    settings: {
+      'editor.theme': 'light'
+    }
+  }
+});
+
 apolloServer.applyMiddleware({ app: app });
 
 var httpServer = (0, _http.createServer)(app);
@@ -142,7 +153,7 @@ apolloServer.installSubscriptionHandlers(httpServer);
 
 httpServer.listen({ port: PORT }, function () {
   console.log('\uD83D\uDE80 Server ready at http://localhost:' + PORT + apolloServer.graphqlPath);
-  console.log('\uD83D\uDE80 Subscriptions ready at ws://localhost:' + PORT + apolloServer.subscriptionsPath);
+  console.log('\uD83D\uDE80 Subscriptions ready at wss://localhost:' + PORT + apolloServer.subscriptionsPath);
 });
 
 /*Cliente de Azure IoTHub

@@ -106,7 +106,18 @@ app.post('/upstreamCallback', (req,res) => {
 
 })
 
-const apolloServer = new ApolloServer({typeDefs,resolvers});
+const apolloServer = new ApolloServer({
+  typeDef: typeDefs,
+  resolvers: {resolvers},
+  playground: {
+    endpoint: `http://localhost:${PORT}${apolloServer.graphqlPath}`,
+    subscriptionEndpoint: `wss://localhost:${PORT}${apolloServer.subscriptionsPath}`,
+    settings: {
+      'editor.theme': 'light'
+    }
+  }
+});
+
 apolloServer.applyMiddleware({ app });
 
 const httpServer = createServer(app);
@@ -114,7 +125,7 @@ apolloServer.installSubscriptionHandlers(httpServer);
 
 httpServer.listen({port: PORT}, () =>{
     console.log(`🚀 Server ready at http://localhost:${PORT}${apolloServer.graphqlPath}`)
-    console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${apolloServer.subscriptionsPath}`)
+    console.log(`🚀 Subscriptions ready at wss://localhost:${PORT}${apolloServer.subscriptionsPath}`)
 })
 
 
