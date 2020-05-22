@@ -36,12 +36,12 @@ const resolvers = {
 
     Subscription: {
         gpsCreated: {
-            subscribe: () => pubsub.asyncIterator('GPS_CREATED')
+            subscribe: () => pubsub.asyncIterator('gpsCreated')
         },
 
         gpsUpdated: {
             subscribe: withFilter(
-                () => pubsub.asyncIterator('GPS_UPDATED'),
+                () => pubsub.asyncIterator('gpsUpdated'),
                 (params, variables) => {
                     return params.gpsUpdated.IMEI === variables.IMEI
                 }
