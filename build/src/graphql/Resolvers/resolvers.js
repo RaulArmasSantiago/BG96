@@ -48,13 +48,15 @@ var resolvers = {
 
     Subscription: {
         gpsCreated: {
-            subscribe: function subscribe() {
+            subscribe: withFilter(function () {
                 return pubsub.asyncIterator('gpsCreated');
-            }
+            }, function (params, variables) {
+                return true;
+            })
         },
 
         gpsUpdated: {
-            subscribe: (0, _apolloServerExpress.withFilter)(function () {
+            subscribe: withFilter(function () {
                 return pubsub.asyncIterator('gpsUpdated');
             }, function (params, variables) {
                 return params.gpsUpdated.IMEI === variables.IMEI;
