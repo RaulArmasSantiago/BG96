@@ -18,7 +18,7 @@ require("babel-polyfill");
 
 
 var GPS_CREATED = 'GPS_CREATED';
-var GPS_UPDATED = 'GPS_UPDATED';
+var GPS_UPDATED = 'gps_updated';
 
 var pubsub = new _apolloServerExpress.PubSub();
 
@@ -157,12 +157,11 @@ var resolvers = {
         },
 
         gpsUpdated: {
-            subscribe: function subscribe() {
-
-                var asyncIterator = pubsub.asyncIterator('GPS_UPDATED');
-
-                return asyncIterator;
-            }
+            subscribe: (0, _apolloServerExpress.withFilter)(function () {
+                return pubsub.asyncIterator('GPS_UPDATED');
+            }, function (params, variables) {
+                return params.gpsUpdated.IMEI === variables.IMEI;
+            })
         }
 
     }

@@ -3,7 +3,7 @@ import { PubSub, withFilter} from 'apollo-server-express';
 import GPS from '../../models/Gps';
 
 const GPS_CREATED = 'GPS_CREATED';
-const GPS_UPDATED = 'GPS_UPDATED';
+const GPS_UPDATED = 'gps_updated';
 
 const pubsub = new PubSub()
 
@@ -43,12 +43,12 @@ const resolvers = {
         },
 
         gpsUpdated: {
-            subscribe: () =>{
-
-                const asyncIterator = pubsub.asyncIterator('GPS_UPDATED');
-                
-                return asyncIterator
-            } 
+            subscribe: withFilter(
+                () => pubsub.asyncIterator('GPS_UPDATED'),
+                (params, variables) => {
+                    return params.gpsUpdated.IMEI === variables.IMEI
+                }
+            )
         }
 
 
