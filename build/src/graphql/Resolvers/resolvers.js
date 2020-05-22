@@ -157,12 +157,12 @@ var resolvers = {
         },
 
         gpsUpdated: {
-            subscribe: (0, _apolloServerExpress.withFilter)(function () {
+            subscribe: function subscribe() {
 
-                return pubsub.asyncIterator('GPS_UPDATED'), function (params, variables) {
-                    return params.gpsUpdated.IMEI === variables.IMEI;
-                };
-            })
+                var asyncIterator = pubsub.asyncIterator('GPS_UPDATED');
+
+                return asyncIterator;
+            }
         }
 
     }
