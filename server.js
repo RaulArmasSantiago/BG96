@@ -113,7 +113,7 @@ const apolloServer = new ApolloServer({
   playground: true
 });
 
-apolloServer.installSubscriptionHandlers({ app });
+apolloServer.applyMiddleware({ app });
 
 const httpServer = createServer(app);
 apolloServer.installSubscriptionHandlers(httpServer);

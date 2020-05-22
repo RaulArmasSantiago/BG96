@@ -141,7 +141,7 @@ var apolloServer = new _apolloServerExpress.ApolloServer({
   playground: true
 });
 
-apolloServer.installSubscriptionHandlers({ app: app });
+apolloServer.applyMiddleware({ app: app });
 
 var httpServer = (0, _http.createServer)(app);
 apolloServer.installSubscriptionHandlers(httpServer);
