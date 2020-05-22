@@ -158,9 +158,10 @@ var resolvers = {
 
         gpsUpdated: {
             subscribe: (0, _apolloServerExpress.withFilter)(function () {
-                return pubsub.asyncIterator('GPS_UPDATED');
-            }, function (params, variables) {
-                return params.gpsUpdated.IMEI === variables.IMEI;
+
+                return pubsub.asyncIterator('GPS_UPDATED'), function (params, variables) {
+                    return params.gpsUpdated.IMEI === variables.IMEI;
+                };
             })
         }
 

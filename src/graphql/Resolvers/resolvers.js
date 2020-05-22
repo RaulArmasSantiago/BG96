@@ -43,11 +43,13 @@ const resolvers = {
         },
 
         gpsUpdated: {
-            subscribe: withFilter(
-                () => pubsub.asyncIterator('GPS_UPDATED'),
+            subscribe: withFilter(() =>{
+
+                return pubsub.asyncIterator('GPS_UPDATED'),
                 (params, variables) => {
                     return params.gpsUpdated.IMEI === variables.IMEI
                 }
+            } 
             )
         }
 
