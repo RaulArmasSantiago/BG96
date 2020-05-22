@@ -110,13 +110,7 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
-  playground: {
-    endpoint: `https://azureiothub-bg9596.herokuapp.com/graphql`,
-    subscriptionEndpoint: `wss://azureiothub-bg9596.herokuapp.com/graphql`,
-    settings: {
-      'editor.theme': 'light'
-    }
-  }
+  playground: true
 });
 
 apolloServer.applyMiddleware({ app });

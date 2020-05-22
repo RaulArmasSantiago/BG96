@@ -36,10 +36,7 @@ const resolvers = {
 
     Subscription: {
         gpsCreated: {
-            subscribe: withFilter(
-                () => pubsub.asyncIterator(['GPS_CREATED']),
-                (params, variables) => true
-            ) 
+            subscribe: () => pubsub.asyncIterator('GPS_CREATED')
         },
 
         gpsUpdated: {

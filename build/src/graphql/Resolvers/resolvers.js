@@ -149,11 +149,9 @@ var resolvers = {
 
     Subscription: {
         gpsCreated: {
-            subscribe: (0, _apolloServerExpress.withFilter)(function () {
-                return pubsub.asyncIterator(['GPS_CREATED']);
-            }, function (params, variables) {
-                return true;
-            })
+            subscribe: function subscribe() {
+                return pubsub.asyncIterator('GPS_CREATED');
+            }
         },
 
         gpsUpdated: {
