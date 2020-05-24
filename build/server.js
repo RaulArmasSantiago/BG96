@@ -135,6 +135,19 @@ app.post('/upstreamCallback', function (req, res) {
   res.status(200).json({ message: "Actualizado" });
 });
 
+app.post('/downstreamCallback', function (req, res) {
+  console.log("UPDATE");
+  var body = req.body;
+  (0, _axios2.default)({
+    url: 'http://localhost:' + PORT + apolloServer.graphqlPath,
+    method: 'post',
+    data: {
+      query: '\n        mutation{\n          updateGps(\n            IMEI:' + body.IMEI + '\n            latitud:' + body.latitud + '\n            longitud:' + body.longitud + '\n          ){\n            IMEI,\n            latitud,\n            longitud\n          }\n        }\n      '
+    }
+  });
+  res.status(200).json({ message: "Actualizado" });
+});
+
 var apolloServer = new _apolloServerExpress.ApolloServer({
   typeDefs: _schema2.default,
   resolvers: _resolvers2.default,

@@ -107,6 +107,32 @@ app.post('/upstreamCallback', (req,res) => {
 
 })
 
+app.post('/downstreamCallback', (req,res) => {
+  console.log("UPDATE")
+  let body = req.body;
+  axios({
+    url:`http://localhost:${PORT}${apolloServer.graphqlPath}`,
+    method:'post',
+    data:{
+      query:`
+        mutation{
+          updateGps(
+            IMEI:${body.IMEI}
+            latitud:${body.latitud}
+            longitud:${body.longitud}
+          ){
+            IMEI,
+            latitud,
+            longitud
+          }
+        }
+      `
+    }
+  })
+  res.status(200).json({message: "Actualizado"})
+
+})
+
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
