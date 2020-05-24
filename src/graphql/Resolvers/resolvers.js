@@ -42,6 +42,7 @@ const resolvers = {
         },
 
         async updateGps(_, input) {
+            console.log(input)
             const gps = await GPS.findOneAndUpdate({IMEI: input.IMEI},{ $set:{ latitud: input.latitud, longitud: input.longitud}}, { new:true })
             await pubsub.publish(GPS_UPDATED, {gpsUpdated: gps})
             return gps
@@ -56,7 +57,7 @@ const resolvers = {
 
         async login(_, input){
             return await comparePassword(input.email, input.password)
-            .then(token => { return token })
+            .then(token => { return { token } })
             .catch(err => { throw err  })
         }
 

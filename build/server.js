@@ -123,6 +123,7 @@ app.use((0, _cors2.default)());
  */
 
 app.post('/upstreamCallback', function (req, res) {
+  console.log("UPDATE");
   var body = req.body;
   (0, _axios2.default)({
     url: 'http://localhost:' + PORT + apolloServer.graphqlPath,

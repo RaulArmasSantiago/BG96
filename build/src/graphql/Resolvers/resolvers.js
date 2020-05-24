@@ -67,6 +67,7 @@ var resolvers = {
             return gps;
         },
         updateGps: async function updateGps(_, input) {
+            console.log(input);
             var gps = await _Gps2.default.findOneAndUpdate({ IMEI: input.IMEI }, { $set: { latitud: input.latitud, longitud: input.longitud } }, { new: true });
             await pubsub.publish(GPS_UPDATED, { gpsUpdated: gps });
             return gps;
@@ -80,7 +81,7 @@ var resolvers = {
         },
         login: async function login(_, input) {
             return await (0, _comparePasswords2.default)(input.email, input.password).then(function (token) {
-                return token;
+                return { token: token };
             }).catch(function (err) {
                 throw err;
             });

@@ -82,6 +82,7 @@ app.use(cors());
  */
 
 app.post('/upstreamCallback', (req,res) => {
+  console.log("UPDATE")
   let body = req.body;
   axios({
     url:`http://localhost:${PORT}${apolloServer.graphqlPath}`,
