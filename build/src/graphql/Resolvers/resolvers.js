@@ -80,7 +80,7 @@ var resolvers = {
         },
         login: async function login(_, input) {
             return await (0, _comparePasswords2.default)(input.email, input.password).then(function (token) {
-                return { token: token };
+                return token;
             }).catch(function (err) {
                 throw err;
             });

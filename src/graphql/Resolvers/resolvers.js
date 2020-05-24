@@ -56,7 +56,7 @@ const resolvers = {
 
         async login(_, input){
             return await comparePassword(input.email, input.password)
-            .then(token => { return { token } })
+            .then(token => { return token })
             .catch(err => { throw err  })
         }
 
