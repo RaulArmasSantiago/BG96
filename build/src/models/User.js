@@ -26,40 +26,13 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
-    birth_date: {
-        type: Date
-    },
-    gender: {
-        type: String,
-        enum: ["Male", "Female"]
-    },
-    nationality: {
+    myGps: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Gps'
+    }],
+    imageProfile: {
         type: String
-    },
-    /*    user_payment: { 
-            type: String 
-        },
-        subscription_id: {
-            type: Schema.Types.ObjectId,
-            ref: "subscriptions"
-        },
-        history: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'movies'
-            }
-        ],
-        favorites: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'movies'
-            }
-        ], */
-    is_active: {
-        type: Boolean,
-        default: true
     }
-
 }, { 'collection': 'User', 'timestamps': true });
 
 // https://mongoosejs.com/docs/middleware.html#pre

@@ -1,6 +1,11 @@
 require("babel-polyfill");
 import { PubSub, withFilter} from 'apollo-server-express';
 import GPS from '../../models/Gps';
+import USER from '../../models/User';
+
+//UTILS
+import createToken from '../../utils/createToken'
+import comparePassword from '../../utils/comparePasswords'
 
 const GPS_CREATED = 'GPS_CREATED';
 const GPS_UPDATED = 'gps_updated';
@@ -9,11 +14,22 @@ const pubsub = new PubSub()
 
 const resolvers = {
     Query: {
+        
+        //GPS
         async allGps() {
             return await GPS.find().exec()
         },
         async fetchGps(_, {IMEI}){
             return await GPS.findOne(IMEI)
+        },
+
+        //USER
+        async allUsers(){
+            return await USER.find().exec()
+        },
+
+        async singleUser(_, {id}){
+            return await USER.findOne(id)
         }
     },
 
@@ -32,23 +48,27 @@ const resolvers = {
             
         },
 
+        // USER
+        async createUser(_, input){
+            const user = await USER.create(input)
+            return user
+        },
+
+        async login(_, input){
+            return await comparePassword(input.email, input.password)
+            .then(token => { return { token } })
+            .catch(err => { throw err  })
+        }
+
     },
 
     Subscription: {
         gpsCreated: {
-            subscribe: withFilter(function () {
-                return pubsub.asyncIterator('gpsCreated');
-            }, function (params, variables) {
-                return true;
-            })
+            subscribe:  () => pubsub.asyncIterator(GPS_CREATED)
         },
 
         gpsUpdated: {
-            subscribe: withFilter(function () {
-                return pubsub.asyncIterator('gpsUpdated');
-            }, function (params, variables) {
-                return params.gpsUpdated.IMEI === variables.IMEI;
-            })
+            subscribe: () => pubsub.asyncIterator(GPS_UPDATED),
         }
 
 
