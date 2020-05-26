@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _apolloServerExpress = require('apollo-server-express');
 
+var _graphqlSubscriptions = require('graphql-subscriptions');
+
 var _Gps = require('../../models/Gps');
 
 var _Gps2 = _interopRequireDefault(_Gps);
@@ -13,6 +15,10 @@ var _Gps2 = _interopRequireDefault(_Gps);
 var _User = require('../../models/User');
 
 var _User2 = _interopRequireDefault(_User);
+
+var _callbackToAsyncIterator = require('callback-to-async-iterator');
+
+var _callbackToAsyncIterator2 = _interopRequireDefault(_callbackToAsyncIterator);
 
 var _createToken = require('../../utils/createToken');
 
@@ -29,7 +35,7 @@ require("babel-polyfill");
 //UTILS
 
 
-var pubsub = new _apolloServerExpress.PubSub();
+var pubsub = new _graphqlSubscriptions.PubSub();
 
 var resolvers = {
     Query: {
@@ -60,13 +66,13 @@ var resolvers = {
         // GPS
         createGps: async function createGps(_, input) {
             var gps = await _Gps2.default.create(input);
-            await pubsub.publish('gpsCreated', { gpsCreated: gps });
+            await pubsub.publish('gpsCreated', { gpsCreated: { gps: gps } });
             return gps;
         },
         updateGps: async function updateGps(_, input) {
             console.log(input);
             var gps = await _Gps2.default.findOneAndUpdate({ IMEI: input.IMEI }, { $set: { latitud: input.latitud, longitud: input.longitud } }, { new: true });
-            await pubsub.publish('gpsUpdated', { gpsUpdated: gps });
+            await pubsub.publish('gpsUpdated', { gpsUpdated: { gps: gps } });
             return gps;
         },
 

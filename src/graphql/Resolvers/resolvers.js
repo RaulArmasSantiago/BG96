@@ -1,7 +1,9 @@
 require("babel-polyfill");
-import { PubSub, withFilter} from 'apollo-server-express';
+import {withFilter} from 'apollo-server-express';
+import {PubSub} from 'graphql-subscriptions'
 import GPS from '../../models/Gps';
 import USER from '../../models/User';
+import asyncify from 'callback-to-async-iterator'
 
 //UTILS
 import createToken from '../../utils/createToken'
