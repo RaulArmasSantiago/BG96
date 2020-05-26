@@ -29,9 +29,6 @@ require("babel-polyfill");
 //UTILS
 
 
-var GPS_CREATED = 'GPS_CREATED';
-var GPS_UPDATED = 'gps_updated';
-
 var pubsub = new _apolloServerExpress.PubSub();
 
 var resolvers = {
@@ -63,13 +60,13 @@ var resolvers = {
         // GPS
         createGps: async function createGps(_, input) {
             var gps = await _Gps2.default.create(input);
-            await pubsub.publish(GPS_CREATED, { gpsCreated: gps });
+            pubsub.publish('gpsCreated', { gpsCreated: gps });
             return gps;
         },
         updateGps: async function updateGps(_, input) {
             console.log(input);
             var gps = await _Gps2.default.findOneAndUpdate({ IMEI: input.IMEI }, { $set: { latitud: input.latitud, longitud: input.longitud } }, { new: true });
-            await pubsub.publish(GPS_UPDATED, { gpsUpdated: gps });
+            pubsub.publish('gpsUpdated', { gpsUpdated: gps });
             return gps;
         },
 
@@ -91,13 +88,13 @@ var resolvers = {
     Subscription: {
         gpsCreated: {
             subscribe: function subscribe() {
-                return pubsub.asyncIterator(GPS_CREATED);
+                return pubsub.asyncIterator('gpsCreated');
             }
         },
 
         gpsUpdated: {
             subscribe: function subscribe() {
-                return pubsub.asyncIterator(GPS_UPDATED);
+                return pubsub.asyncIterator('gpsUpdated');
             }
         }
 

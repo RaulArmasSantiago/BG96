@@ -7,9 +7,6 @@ import USER from '../../models/User';
 import createToken from '../../utils/createToken'
 import comparePassword from '../../utils/comparePasswords'
 
-const GPS_CREATED = 'GPS_CREATED';
-const GPS_UPDATED = 'gps_updated';
-
 const pubsub = new PubSub()
 
 const resolvers = {
@@ -37,14 +34,14 @@ const resolvers = {
         // GPS
         async createGps(_, input){
             const gps = await GPS.create(input);
-            await pubsub.publish(GPS_CREATED, {gpsCreated: gps});
+            pubsub.publish('gpsCreated', {gpsCreated: gps});
             return gps
         },
 
         async updateGps(_, input) {
             console.log(input)
             const gps = await GPS.findOneAndUpdate({IMEI: input.IMEI},{ $set:{ latitud: input.latitud, longitud: input.longitud}}, { new:true })
-            await pubsub.publish(GPS_UPDATED, {gpsUpdated: gps})
+            pubsub.publish('gpsUpdated', {gpsUpdated: gps})
             return gps
             
         },
@@ -65,11 +62,11 @@ const resolvers = {
 
     Subscription: {
         gpsCreated: {
-            subscribe:  () => pubsub.asyncIterator(GPS_CREATED)
+            subscribe:  () => pubsub.asyncIterator('gpsCreated')
         },
 
         gpsUpdated: {
-            subscribe: () => pubsub.asyncIterator(GPS_UPDATED),
+            subscribe: () => pubsub.asyncIterator('gpsUpdated'),
         }
 
 
