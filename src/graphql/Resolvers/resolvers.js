@@ -1,6 +1,5 @@
 require("babel-polyfill");
-import {withFilter} from 'apollo-server-express';
-import {PubSub} from 'graphql-subscriptions'
+import {PubSub, withFilter} from 'apollo-server-express';
 import GPS from '../../models/Gps';
 import USER from '../../models/User';
 import asyncify from 'callback-to-async-iterator'
@@ -64,11 +63,18 @@ const resolvers = {
 
     Subscription: {
         gpsCreated: {
-            subscribe:  () => pubsub.asyncIterator('gpsCreated')
+            subscribe:  function(){
+               return pubsub.asyncIterator('gpsCretated') 
+            }
         },
 
         gpsUpdated: {
-            subscribe: () => pubsub.asyncIterator('gpsUpdated'),
+            subscribe: withFilter(
+                () => pubsub.asyncIterator('gpsUpdated'),
+                (params,variables) => {
+                    return params.gpsUpdated.IMEI === variables.IMEI
+                }
+            )
         }
 
 

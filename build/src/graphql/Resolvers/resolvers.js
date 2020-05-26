@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _apolloServerExpress = require('apollo-server-express');
 
-var _graphqlSubscriptions = require('graphql-subscriptions');
-
 var _Gps = require('../../models/Gps');
 
 var _Gps2 = _interopRequireDefault(_Gps);
@@ -35,7 +33,7 @@ require("babel-polyfill");
 //UTILS
 
 
-var pubsub = new _graphqlSubscriptions.PubSub();
+var pubsub = new _apolloServerExpress.PubSub();
 
 var resolvers = {
     Query: {
@@ -94,14 +92,16 @@ var resolvers = {
     Subscription: {
         gpsCreated: {
             subscribe: function subscribe() {
-                return pubsub.asyncIterator('gpsCreated');
+                return pubsub.asyncIterator('gpsCretated');
             }
         },
 
         gpsUpdated: {
-            subscribe: function subscribe() {
+            subscribe: (0, _apolloServerExpress.withFilter)(function () {
                 return pubsub.asyncIterator('gpsUpdated');
-            }
+            }, function (params, variables) {
+                return params.gpsUpdated.IMEI === variables.IMEI;
+            })
         }
 
     }
