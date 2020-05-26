@@ -44,9 +44,11 @@ var _Gps = require('./src/models/Gps.js');
 
 var _Gps2 = _interopRequireDefault(_Gps);
 
-var _path = require('path');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//Manejador de eentos IotHub Azure
+//Generales
+var app = (0, _express2.default)();
 
 //Middleware: GrapgQL
 
@@ -58,10 +60,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 //Apollo
-var app = (0, _express2.default)();
-
-//Manejador de eentos IotHub Azure
-//Generales
 
 
 var PORT = process.env.PORT || 3001;

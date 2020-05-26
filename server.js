@@ -22,7 +22,6 @@ import resolvers from './src/graphql/Resolvers/resolvers';
 
 //MODELOS
 import Gps from './src/models/Gps.js'
-import { posix } from 'path';
 
 
 const app = express();
