@@ -1,5 +1,6 @@
 require("babel-polyfill");
-import {PubSub, withFilter} from 'apollo-server-express';
+import {withFilter} from 'apollo-server-express';
+import {PubSub} from 'apollo-server'
 import GPS from '../../models/Gps';
 import USER from '../../models/User';
 import asyncify from 'callback-to-async-iterator'
