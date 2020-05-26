@@ -60,13 +60,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //Apollo
 var app = (0, _express2.default)();
 
+//Manejador de eentos IotHub Azure
+//Generales
+
+
+var PORT = process.env.PORT || 3001;
+
 /**
  * Aqui definimos la conexion a la base de datos MongoBD
  */
-
-
-//Manejador de eentos IotHub Azure
-//Generales
 _mongoose2.default.connect('mongodb://iotaxi1:sistemasiotaxi1@ds157614.mlab.com:57614/iotaxi', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
 //mongoose.connect('mongodb://localhost:27017/iotaxi')
 var db = _mongoose2.default.connection;
@@ -114,7 +116,6 @@ var apolloServer = new _apolloServerExpress.ApolloServer({
 
 apolloServer.applyMiddleware({ app: app });
 
-var PORT = process.env.PORT || 3001;
 var httpServer = (0, _http.createServer)(app);
 
 apolloServer.installSubscriptionHandlers(httpServer);

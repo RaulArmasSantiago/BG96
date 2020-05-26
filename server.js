@@ -27,6 +27,8 @@ import { posix } from 'path';
 
 const app = express();
 
+const PORT = process.env.PORT || 3001
+
 /**
  * Aqui definimos la conexion a la base de datos MongoBD
  */
@@ -101,7 +103,7 @@ const apolloServer = new ApolloServer({
 
 apolloServer.applyMiddleware({ app });
 
-const PORT = process.env.PORT || 3001
+
 const httpServer = createServer(app);
 
 apolloServer.installSubscriptionHandlers(httpServer);

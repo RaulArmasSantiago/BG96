@@ -60,13 +60,13 @@ var resolvers = {
         // GPS
         createGps: async function createGps(_, input) {
             var gps = await _Gps2.default.create(input);
-            pubsub.publish('gpsCreated', { gpsCreated: gps });
+            await pubsub.publish('gpsCreated', { gpsCreated: gps });
             return gps;
         },
         updateGps: async function updateGps(_, input) {
             console.log(input);
             var gps = await _Gps2.default.findOneAndUpdate({ IMEI: input.IMEI }, { $set: { latitud: input.latitud, longitud: input.longitud } }, { new: true });
-            pubsub.publish('gpsUpdated', { gpsUpdated: gps });
+            await pubsub.publish('gpsUpdated', { gpsUpdated: gps });
             return gps;
         },
 
