@@ -109,7 +109,16 @@ var apolloServer = new _apolloServerExpress.ApolloServer({
   typeDefs: _schema2.default,
   resolvers: _resolvers2.default,
   introspection: true,
-  playground: true
+  playground: true,
+  subscriptions: {
+    onConnect: function onConnect() {
+      console.log("🚀 Connected 🚀");
+    },
+    onDisconnect: function onDisconnect() {
+      console.log("Disconected");
+    }
+  },
+  tracing: process.env.NODE_ENV !== "production"
 });
 
 apolloServer.applyMiddleware({ app: app });
