@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/100059b2-974e-45fd-b36e-ed96d83fcb4c/resourceGroups/Quectel/providers/Microsoft.Web/sites/gps-bg96",
+    "appService.deploySubpath": "."
+}
