@@ -1,13 +1,9 @@
 //Generales
 import mongoose from 'mongoose';
 import cors from 'cors';
-import bcrypt from 'bcryptjs';
 import express from 'express';
 import bodyParser from 'body-parser'
 import axios from 'axios';
-
-//Manejador de eentos IotHub Azure
-import EventHub from '@azure/event-hubs'
 
 //Apollo
 import {createServer} from 'http';
@@ -16,9 +12,6 @@ import { ApolloServer} from 'apollo-server-express';
 // Imports: GraphQL TypeDefs & Resolvers
 import typeDefs from './src/graphql/schema';
 import resolvers from './src/graphql/Resolvers/resolvers';
-
-//Middleware: GrapgQL
-
 
 //MODELOS
 import Gps from './src/models/Gps.js'
