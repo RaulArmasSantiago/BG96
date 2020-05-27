@@ -91,16 +91,19 @@ var resolvers = {
 
     Subscription: {
         gpsCreated: {
-            subscribe: function subscribe() {
+            subscribe: (0, _apolloServerExpress.withFilter)(function () {
                 return pubsub.asyncIterator('gpsCreated');
-            }
+            }, function (params, variables) {
+                return true;
+            })
         },
 
         gpsUpdated: {
-            subscribe: function subscribe() {
+            subscribe: (0, _apolloServerExpress.withFilter)(function () {
                 return pubsub.asyncIterator('gpsUpdated');
-            }
-
+            }, function (params, variables) {
+                return true;
+            })
         }
 
     }
