@@ -69,12 +69,8 @@ const resolvers = {
         },
 
         gpsUpdated: {
-            subscribe: withFilter(
-                () => pubsub.asyncIterator('gpsUpdated'),
-                (params,variables) => {
-                    return params.gpsUpdated.IMEI === variables.IMEI
-                }
-            )
+            subscribe: () => pubsub.asyncIterator('gpsUpdated'),
+                
         }
 
 

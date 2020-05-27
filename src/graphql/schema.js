@@ -69,7 +69,7 @@ const typeDefs = gql`
 
     type Subscription {
         gpsCreated: Gps
-        gpsUpdated(IMEI:String!): Gps
+        gpsUpdated: Gps
     }
 `;
 

@@ -97,11 +97,10 @@ var resolvers = {
         },
 
         gpsUpdated: {
-            subscribe: (0, _apolloServerExpress.withFilter)(function () {
+            subscribe: function subscribe() {
                 return pubsub.asyncIterator('gpsUpdated');
-            }, function (params, variables) {
-                return params.gpsUpdated.IMEI === variables.IMEI;
-            })
+            }
+
         }
 
     }
