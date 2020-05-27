@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _apolloServerExpress = require('apollo-server-express');
 
-var _apolloServer = require('apollo-server');
-
 var _Gps = require('../../models/Gps');
 
 var _Gps2 = _interopRequireDefault(_Gps);
@@ -35,7 +33,7 @@ require("babel-polyfill");
 //UTILS
 
 
-var pubsub = new _apolloServer.PubSub();
+var pubsub = new _apolloServerExpress.PubSub();
 
 var resolvers = {
     Query: {
