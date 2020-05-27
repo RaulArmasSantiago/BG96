@@ -97,7 +97,16 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
-  playground: true
+  playground: true,
+  subscriptions:{
+    onConnect: () => {
+      console.log("🚀 Connected 🚀")
+    },
+    onDisconnect: () => {
+      console.log("Disconected")
+    }
+  },
+  tracing: process.env.NODE_ENV !== "production"
 });
 
 apolloServer.applyMiddleware({ app });
@@ -106,6 +115,8 @@ apolloServer.applyMiddleware({ app });
 const httpServer = createServer(app);
 
 apolloServer.installSubscriptionHandlers(httpServer);
+
+
 
 httpServer.listen({port: PORT}, () =>{
     console.log(`🚀 Server ready at http://localhost:${PORT}${apolloServer.graphqlPath}`)
