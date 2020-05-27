@@ -35,14 +35,14 @@ const resolvers = {
         // GPS
         async createGps(_, input){
             const gps = await GPS.create(input);
-            await pubsub.publish('gpsCreated', {gpsCreated: {gps}});
+            await pubsub.publish('gpsCreated', {gpsCreated: gps});
             return gps
         },
 
         async updateGps(_, input) {
             console.log(input)
             const gps = await GPS.findOneAndUpdate({IMEI: input.IMEI},{ $set:{ latitud: input.latitud, longitud: input.longitud}}, { new:true })
-            await pubsub.publish('gpsUpdated', {gpsUpdated: {gps}})
+            await pubsub.publish('gpsUpdated', {gpsUpdated: gps})
             return gps
             
         },
