@@ -92,7 +92,7 @@ var resolvers = {
     Subscription: {
         gpsCreated: {
             subscribe: function subscribe() {
-                return pubsub.asyncIterator('gpsCretated');
+                return pubsub.asyncIterator('gpsCreated');
             }
         },
 
