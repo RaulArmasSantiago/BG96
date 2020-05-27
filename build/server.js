@@ -8,10 +8,6 @@ var _cors = require('cors');
 
 var _cors2 = _interopRequireDefault(_cors);
 
-var _bcryptjs = require('bcryptjs');
-
-var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
-
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -23,10 +19,6 @@ var _bodyParser2 = _interopRequireDefault(_bodyParser);
 var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
-
-var _eventHubs = require('@azure/event-hubs');
-
-var _eventHubs2 = _interopRequireDefault(_eventHubs);
 
 var _http = require('http');
 
@@ -46,12 +38,8 @@ var _Gps2 = _interopRequireDefault(_Gps);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//Manejador de eentos IotHub Azure
 //Generales
 var app = (0, _express2.default)();
-
-//Middleware: GrapgQL
-
 
 //MODELOS
 
