@@ -1,5 +1,5 @@
-env : flex
+env: flex
 
-tiempo de ejecución : nodejs
+runtime: nodejs
 
-skip_files : yarn.lock
+skip_files: yarn.lock
