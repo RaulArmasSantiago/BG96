@@ -24,10 +24,10 @@ const PORT = process.env.PORT || 3001
 /**
  * Aqui definimos la conexion a la base de datos MongoBD
  */
-mongoose.connect('mongodb://iotaxi1:sistemasiotaxi1@ds157614.mlab.com:57614/iotaxi',{useNewUrlParser:true, useCreateIndex:true, useUnifiedTopology: true, useFindAndModify:false})
+mongoose.connect('mongodb://iotaxi1:sistemasiotaxi1@ds157614.mlab.com:57614/iotaxi',{useNewUrlParser:true, useCreateIndex:true, useUnifiedTopology: true, useFindAndModify:false, })
 //mongoose.connect('mongodb://localhost:27017/iotaxi')
 const db = mongoose.connection;
-db.on('error', () => console.log("Error al conectar a la BD"))
+db.once('error', () => console.log("Error al conectar a la BD"))
     .once('open', () => console.log("Conectado a la BD!!"))
 
 app.use(bodyParser.json());
@@ -39,14 +39,15 @@ app.post('/upstreamCallback', (req,res) => {
   let body = req.body;
   axios({
     url:`https://gps-bg96.azurewebsites.net/graphql`,
+    //url:`http://localhost:3001/graphql`,
     method:'post',
     data:{
       query:`
         mutation{
           updateGps(
-            IMEI:${body.IMEI}
-            latitud:${body.latitud}
-            longitud:${body.longitud}
+            IMEI:"${body.IMEI}"
+            latitud:"${body.latitud}"
+            longitud:"${body.longitud}"
           ){
             IMEI,
             latitud,
@@ -55,31 +56,33 @@ app.post('/upstreamCallback', (req,res) => {
         }
       `
     }
+  }).then(resp => {
+    res.status(200).json({
+      data:{
+        latitud: `${body.latitud}`, 
+        longitud: `${body.longitud}`
+      }, 
+      imei: `${body.IMEI}`,
+      sendTime: `${Date.now()}`
+    })
+  }).catch(error => {
+    res.status(400)
   })
-  res.status(200).json({
-    data:{
-      latitud: `${body.latitud}`, 
-      longitud: `${body.longitud}`
-    }, 
-    imei: `${body.IMEI}`,
-    sendTime: `${Date.now()}`
-  })
-
 })
 
 app.post('/downstreamCallback', (req,res) => {
-  console.log("UPDATE")
   let body = req.body;
   axios({
     url:`https://gps-bg96.azurewebsites.net/graphql`,
+    //url:`http://localhost:3001/graphql`,
     method:'post',
     data:{
       query:`
         mutation{
           updateGps(
-            IMEI:${body.IMEI}
-            latitud:${body.latitud}
-            longitud:${body.longitud}
+            IMEI:"${body.IMEI}"
+            latitud:"${body.latitud}"
+            longitud:"${body.longitud}"
           ){
             IMEI,
             latitud,

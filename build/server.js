@@ -58,7 +58,7 @@ var PORT = process.env.PORT || 3001;
 _mongoose2.default.connect('mongodb://iotaxi1:sistemasiotaxi1@ds157614.mlab.com:57614/iotaxi', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
 //mongoose.connect('mongodb://localhost:27017/iotaxi')
 var db = _mongoose2.default.connection;
-db.on('error', function () {
+db.once('error', function () {
   return console.log("Error al conectar a la BD");
 }).once('open', function () {
   return console.log("Conectado a la BD!!");
@@ -72,29 +72,33 @@ app.post('/upstreamCallback', function (req, res) {
   var body = req.body;
   (0, _axios2.default)({
     url: 'https://gps-bg96.azurewebsites.net/graphql',
+    //url:`http://localhost:3001/graphql`,
     method: 'post',
     data: {
-      query: '\n        mutation{\n          updateGps(\n            IMEI:' + body.IMEI + '\n            latitud:' + body.latitud + '\n            longitud:' + body.longitud + '\n          ){\n            IMEI,\n            latitud,\n            longitud\n          }\n        }\n      '
+      query: '\n        mutation{\n          updateGps(\n            IMEI:"' + body.IMEI + '"\n            latitud:"' + body.latitud + '"\n            longitud:"' + body.longitud + '"\n          ){\n            IMEI,\n            latitud,\n            longitud\n          }\n        }\n      '
     }
-  });
-  res.status(200).json({
-    data: {
-      latitud: '' + body.latitud,
-      longitud: '' + body.longitud
-    },
-    imei: '' + body.IMEI,
-    sendTime: '' + Date.now()
+  }).then(function (resp) {
+    res.status(200).json({
+      data: {
+        latitud: '' + body.latitud,
+        longitud: '' + body.longitud
+      },
+      imei: '' + body.IMEI,
+      sendTime: '' + Date.now()
+    });
+  }).catch(function (error) {
+    res.status(400);
   });
 });
 
 app.post('/downstreamCallback', function (req, res) {
-  console.log("UPDATE");
   var body = req.body;
   (0, _axios2.default)({
     url: 'https://gps-bg96.azurewebsites.net/graphql',
+    //url:`http://localhost:3001/graphql`,
     method: 'post',
     data: {
-      query: '\n        mutation{\n          updateGps(\n            IMEI:' + body.IMEI + '\n            latitud:' + body.latitud + '\n            longitud:' + body.longitud + '\n          ){\n            IMEI,\n            latitud,\n            longitud\n          }\n        }\n      '
+      query: '\n        mutation{\n          updateGps(\n            IMEI:"' + body.IMEI + '"\n            latitud:"' + body.latitud + '"\n            longitud:"' + body.longitud + '"\n          ){\n            IMEI,\n            latitud,\n            longitud\n          }\n        }\n      '
     }
   });
   res.status(200).json({ message: "Actualizado" });
