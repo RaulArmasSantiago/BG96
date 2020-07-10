@@ -56,7 +56,7 @@ app.post('/upstreamCallback', (req,res) => {
       `
     }
   })
-  res.status(200).json({message: "Actualizado"})
+  res.status(200).json({message: "Actualizado", imei: `${body.IMEI}`})
 
 })
 
