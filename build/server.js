@@ -71,20 +71,27 @@ app.post('/upstreamCallback', function (req, res) {
   console.log("UPDATE");
   var body = req.body;
   (0, _axios2.default)({
-    url: 'http://localhost:' + PORT + apolloServer.graphqlPath,
+    url: 'https://gps-bg96.azurewebsites.net/graphql',
     method: 'post',
     data: {
       query: '\n        mutation{\n          updateGps(\n            IMEI:' + body.IMEI + '\n            latitud:' + body.latitud + '\n            longitud:' + body.longitud + '\n          ){\n            IMEI,\n            latitud,\n            longitud\n          }\n        }\n      '
     }
   });
-  res.status(200).json({ message: "Actualizado" });
+  res.status(200).json({
+    data: {
+      latitud: '' + body.latitud,
+      longitud: '' + body.longitud
+    },
+    imei: '' + body.IMEI,
+    sendTime: '' + Date.now()
+  });
 });
 
 app.post('/downstreamCallback', function (req, res) {
   console.log("UPDATE");
   var body = req.body;
   (0, _axios2.default)({
-    url: 'http://localhost:' + PORT + apolloServer.graphqlPath,
+    url: 'https://gps-bg96.azurewebsites.net/graphql',
     method: 'post',
     data: {
       query: '\n        mutation{\n          updateGps(\n            IMEI:' + body.IMEI + '\n            latitud:' + body.latitud + '\n            longitud:' + body.longitud + '\n          ){\n            IMEI,\n            latitud,\n            longitud\n          }\n        }\n      '

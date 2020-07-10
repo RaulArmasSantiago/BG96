@@ -14,10 +14,6 @@ var _User = require('../../models/User');
 
 var _User2 = _interopRequireDefault(_User);
 
-var _callbackToAsyncIterator = require('callback-to-async-iterator');
-
-var _callbackToAsyncIterator2 = _interopRequireDefault(_callbackToAsyncIterator);
-
 var _createToken = require('../../utils/createToken');
 
 var _createToken2 = _interopRequireDefault(_createToken);

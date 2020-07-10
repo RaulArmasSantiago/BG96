@@ -56,7 +56,14 @@ app.post('/upstreamCallback', (req,res) => {
       `
     }
   })
-  res.status(200).json({message: "Actualizado", imei: `${body.IMEI}`})
+  res.status(200).json({
+    data:{
+      latitud: `${body.latitud}`, 
+      longitud: `${body.longitud}`
+    }, 
+    imei: `${body.IMEI}`,
+    sendTime: `${Date.now()}`
+  })
 
 })
 
