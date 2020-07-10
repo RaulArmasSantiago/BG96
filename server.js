@@ -38,7 +38,7 @@ app.post('/upstreamCallback', (req,res) => {
   console.log("UPDATE")
   let body = req.body;
   axios({
-    url:`http://localhost:${PORT}${apolloServer.graphqlPath}`,
+    url:`https://gps-bg96.azurewebsites.net/graphql`,
     method:'post',
     data:{
       query:`
@@ -64,7 +64,7 @@ app.post('/downstreamCallback', (req,res) => {
   console.log("UPDATE")
   let body = req.body;
   axios({
-    url:`http://localhost:${PORT}${apolloServer.graphqlPath}`,
+    url:`https://gps-bg96.azurewebsites.net/graphql`,
     method:'post',
     data:{
       query:`
